@@ -193,4 +193,6 @@ public void jsScrollByPixel() {
             LoggerHandler.infoMessage(e.getMessage());
         }
     }
+
 }
+
