@@ -1,7 +1,7 @@
 package utils;
 
 import java.io.FileInputStream;
-
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -56,5 +56,4 @@ public class Base {
         driver = new EventFiringDecorator<>(listener).decorate(driver);
 
     }
-
 }

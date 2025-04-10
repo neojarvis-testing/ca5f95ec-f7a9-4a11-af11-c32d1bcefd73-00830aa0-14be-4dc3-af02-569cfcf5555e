@@ -57,6 +57,7 @@ public class WebDriverHelper extends Base {
         }
     }
  
+
     public static void assertPageText( By locator, String expectedText) {
         try {
             String actualText = driver.findElement(locator).getText();
@@ -68,6 +69,14 @@ public class WebDriverHelper extends Base {
             }
         } catch (AssertionError e) {
             LoggerHandler.infoMessage(e.getMessage());
+
+    public static void assertPageText(WebDriver driver, By locator, String expectedText) {
+        try {
+            String actualText = driver.findElement(locator).getText();
+            Assert.assertEquals(expectedText, actualText);
+        } catch (AssertionError e) {
+            LoggerHandler.errorMessage(e.getMessage());
+
         }
     }
  
@@ -104,6 +113,7 @@ public class WebDriverHelper extends Base {
             LoggerHandler.errorMessage(e.getMessage());
         }
     }
+
     public void jsScrollByPixel() {
         try {
             JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -112,6 +122,7 @@ public class WebDriverHelper extends Base {
             LoggerHandler.infoMessage(e.getMessage());
         }
     }
+
  
     public void hardWait(long milisecs) {
  
@@ -182,4 +193,30 @@ public class WebDriverHelper extends Base {
  
     }
  
+
+
+
+public void jsScrollByPixel() {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,500)", "");
+        } catch (Exception e) {
+            LoggerHandler.infoMessage(e.getMessage());
+        }
+    }
+ 
+  public static void assertPageText( By locator, String expectedText) {
+        try {
+            String actualText = driver.findElement(locator).getText();
+            if(actualText.contains(expectedText)){
+                Assert.assertTrue(true);
+            }
+            else{
+                Assert.assertTrue(false); 
+            }
+        } catch (AssertionError e) {
+            LoggerHandler.infoMessage(e.getMessage());
+        }
+    }
+
 }
