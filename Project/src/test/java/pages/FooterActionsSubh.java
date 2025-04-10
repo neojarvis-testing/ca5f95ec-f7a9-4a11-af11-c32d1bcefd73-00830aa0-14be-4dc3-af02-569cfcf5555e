@@ -1,4 +1,5 @@
 package pages;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import org.openqa.selenium.By;
@@ -8,7 +9,6 @@ import utils.Base;
 import utils.ExcelReader;
 import utils.LoggerHandler;
 import utils.WebDriverHelper;
-
 public class FooterActionsSubh {
   WebDriverHelper helper = new WebDriverHelper();
   public void linkVerificationPolicyInfo() {
@@ -34,7 +34,6 @@ public class FooterActionsSubh {
     String string = helper.getText(FooterLocatorsSubh.policyInfo);
     helper.assertPageText(Base.driver, FooterLocatorsSubh.policyInfo, string);
   }
-
   public void linkVerificationAboutCompany() {
     List<String> linkTextBusiness = Base.driver.findElements(By.xpath(
         "//h6[contains(text(),'About Company')]/following-sibling::ul/li/a"))

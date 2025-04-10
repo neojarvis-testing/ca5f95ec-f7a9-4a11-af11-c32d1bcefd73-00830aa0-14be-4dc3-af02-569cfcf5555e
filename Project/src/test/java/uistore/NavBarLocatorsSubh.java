@@ -1,7 +1,5 @@
 package uistore;
-
 import org.openqa.selenium.By;
-
 public class NavBarLocatorsSubh {
     public static By noThanks = By.cssSelector("button[id='wzrk-cancel']");
     public static By location = By.cssSelector(
