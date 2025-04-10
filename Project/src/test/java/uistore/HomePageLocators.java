@@ -21,7 +21,7 @@ public class HomePageLocators {
 
     
 
-  public static By noThanks = By.cssSelector("button[id='wzrk-cancel']");
+  public static By noThanksnew = By.cssSelector("button[id='wzrk-cancel']");
   public static By pinCode = By.cssSelector("input[id='pincode-location-input']");
   public static By personalized = By.xpath("//span[contains(text(),'Personalised')]");
   public static By Mugs = By.cssSelector("a[href='/personalised-mugs-lp?promo=personalizedmenu_dt_hm']");
