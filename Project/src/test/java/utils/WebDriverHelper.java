@@ -16,36 +16,31 @@ import java.util.Set;
  
 public class WebDriverHelper extends Base {
  
-    public void waitForElementToBeVisible(By locator) {
+    public void hoverAndClick(By locator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            WebElement Element = Base.driver.findElement(locator);
+            Actions actions = new Actions(Base.driver);
+            actions.moveToElement(Element).build().perform();
+            if(Element.isDisplayed()){
+                Element.click();
+            }  
+        } catch (Exception e) {
+            LoggerHandler.errorMessage("hoverAndClick"+e.getMessage());
+        }
+ 
+    }
+ 
+    public void waitForElementToBeVisible(By locator,int time) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("Explicitwait "+e.getMessage());
         }
  
     }
  
-    public void waitForElementToBeClickable(By locator) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            wait.until(ExpectedConditions.elementToBeClickable(locator));
-        } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
-        }
  
-    }
- 
-    public void waitForElementToBeEntered(By locator, String value) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            wait.until(ExpectedConditions.textToBePresentInElementValue(locator, value));
-        } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
- 
-        }
- 
-    }
  
     public void assertPageTitle(WebDriver driver, String expectedTitle) {
         try {
@@ -53,7 +48,7 @@ public class WebDriverHelper extends Base {
             String actualTitle = driver.getTitle();
             Assert.assertEquals(actualTitle, expectedTitle);
         } catch (AssertionError e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("Assert page Title"+e.getMessage());
         }
     }
  
@@ -62,7 +57,7 @@ public class WebDriverHelper extends Base {
             String actualText = driver.findElement(locator).getText();
             Assert.assertEquals(expectedText, actualText);
         } catch (AssertionError e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("Assert Page Text"+e.getMessage());
         }
     }
  
@@ -76,7 +71,7 @@ public class WebDriverHelper extends Base {
                 }
             }
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("Window Not Switched"+e.getMessage());
         }
     }
  
@@ -86,7 +81,7 @@ public class WebDriverHelper extends Base {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].scrollIntoView(true);", element);
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("JavaScript scroll"+e.getMessage());
         }
     }
  
@@ -96,7 +91,7 @@ public class WebDriverHelper extends Base {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].click();", element);
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("JavaScript click"+e.getMessage());
         }
     }
  
@@ -105,7 +100,7 @@ public class WebDriverHelper extends Base {
         try {
             Thread.sleep(milisecs);
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("Hard Wait"+e.getMessage());
         }
     }
  
@@ -113,9 +108,8 @@ public class WebDriverHelper extends Base {
         try {
             WebElement webElement = Base.driver.findElement(locator);
             webElement.click();
-            LoggerHandler.infoMessage("clicked on");
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("Element Not Clicked"+e.getMessage());
  
         }
  
@@ -126,7 +120,7 @@ public class WebDriverHelper extends Base {
             WebElement webElement = Base.driver.findElement(locator);
             webElement.sendKeys(data);
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("sendKeys"+e.getMessage());
  
         }
  
@@ -137,7 +131,7 @@ public class WebDriverHelper extends Base {
             WebElement webElement = Base.driver.findElement(locator);
             return webElement.getText();
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("GetText"+e.getMessage());
             return null;
         }
     }
@@ -147,7 +141,7 @@ public class WebDriverHelper extends Base {
             WebElement webElement = Base.driver.findElement(locator);
             webElement.sendKeys(Keys.ENTER);
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("enterAction"+e.getMessage());
  
         }
  
@@ -164,13 +158,13 @@ public class WebDriverHelper extends Base {
             Actions actions = new Actions(Base.driver);
             actions.moveToElement(webElement).build().perform();
         } catch (Exception e) {
-            LoggerHandler.errorMessage(e.getMessage());
+            LoggerHandler.errorMessage("hoverOverElement"+e.getMessage());
         }
  
     }
  
-
-
+ 
+ 
 public void jsScrollByPixel() {
         try {
             JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -187,12 +181,11 @@ public void jsScrollByPixel() {
                 Assert.assertTrue(true);
             }
             else{
-                Assert.assertTrue(false); 
+                Assert.assertTrue(false);
             }
         } catch (AssertionError e) {
             LoggerHandler.infoMessage(e.getMessage());
         }
     }
-
+ 
 }
-

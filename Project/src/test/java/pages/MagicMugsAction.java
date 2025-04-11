@@ -4,8 +4,10 @@ package pages;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
+import uistore.HomePage;
 import uistore.HomePageLocators;
-import uistore.ProductPageLocators;
+import uistore.ProductPage;
+import uistore.ResultsPage;
 import uistore.ResultsPageLocators;
 import utils.ExcelReader;
 import utils.LoggerHandler;
@@ -19,35 +21,43 @@ public class MagicMugsAction {
     public void deliverToBangalore(ExtentTest test) {
         try {
             helper.clickOnElement(HomePageLocators.noThanks);
-            test.log(Status.INFO, "click on the first product");
+            test.log(Status.INFO, "clicked on no thanks");
             LoggerHandler.infoMessage("verify the pincode");
+            Screenshot.capScreenshot("FNP");
+            LoggerHandler.infoMessage("hello");
+            Reporter.attachToReport("FNP",test,"");
+            
 
         } catch (Exception e) {
             LoggerHandler.errorMessage(e.getMessage());
         }
     }
 
-    public void personalizedNavBar() {
+    public void personalizedNavBar(ExtentTest test) {
         try {
 
-            helper.hoverOverElement(HomePageLocators.personalized);
-            helper.clickOnElement(HomePageLocators.Mugs);
-            helper.clickOnElement(HomePageLocators.pinCode);
+            helper.hoverOverElement(HomePage.personalized);
+            helper.clickOnElement(HomePage.Mugs);
+            helper.clickOnElement(HomePage.pinCode);
 
-            helper.sendKeys(HomePageLocators.pinCode, ExcelReader.readCellValue("Sheet1", "1", "city"));
-            helper.waitForElementToBeVisible(ResultsPageLocators.blr);
 
-            helper.enterAction(HomePageLocators.pinCode);
+            helper.sendKeys(HomePage.pinCode, ExcelReader.readCellValue("Sheet1", "1", "city"));
+            helper.waitForElementToBeVisible(ProductPage.blr, 10);
+            test.log(Status.INFO, "entered city");
 
-            helper.hoverOverElement(HomePageLocators.continueShoppping);
-            helper.clickOnElement(HomePageLocators.continueShoppping);
+            helper.enterAction(HomePage.pinCode);
+
+            helper.hoverOverElement(HomePage.shopping);
+            helper.clickOnElement(HomePage.shopping);
             Thread.sleep(2000);
-            helper.clickOnElement(ResultsPageLocators.magicMugs);
-            helper.clickOnElement(ResultsPageLocators.firstResult);
+            helper.clickOnElement(ResultsPage.magicMugs);
+            helper.clickOnElement(ResultsPage.firstResult);
+            test.log(Status.INFO, "click on the first product");
 
             helper.switchToNewWindow();
-            helper.waitForElementToBeVisible(ProductPageLocators.addToCart);
-            helper.clickOnElement(ProductPageLocators.addToCart);
+            helper.waitForElementToBeVisible(ProductPage.addToCart, 10);
+            helper.clickOnElement(ProductPage.addToCart);
+            test.log(Status.INFO, "clicked om add to cart");
 
 
         } catch (Exception e) {
