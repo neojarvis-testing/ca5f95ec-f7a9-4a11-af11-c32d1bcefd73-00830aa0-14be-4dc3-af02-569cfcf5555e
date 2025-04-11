@@ -7,6 +7,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+
 import uistore.HomePageLocators;
 import utils.Base;
 import utils.ExcelReader;
@@ -17,7 +20,7 @@ public class FnpBusinessAction {
     WebDriverHelper helper = new WebDriverHelper();
     JavascriptExecutor js = (JavascriptExecutor) Base.driver;
 
-    public void footerIteration() {
+    public void footerIteration(ExtentTest test) {
         try {
 
             helper.clickOnElement(HomePageLocators.noThanks);
@@ -25,20 +28,12 @@ public class FnpBusinessAction {
             js.executeScript("arguments[0].scrollIntoView(false)", decoration);
             js.executeScript("window.scrollBy(0,100)", "");
 
-            List<String> linkTextBusiness = Base.driver.findElements(By.xpath(
-                    "//h6[contains(text(),'FNP business')]/following-sibling::ul/li/a"))
-                    .stream()
-                    .map(WebElement::getText)
-                    .collect(Collectors.toList());
-
-
-            for (int i = 0; i < linkTextBusiness.size(); i++) {
-               
-                String linkText = linkTextBusiness.get(i);
-            
-                By footerLink = By.xpath("//a[text()='" + linkText + "']");
-
-                System.out.println(footerLink);
+             List<String> values  = ExcelReader.readExcelData("Sheet1", "linktext");
+                  
+           
+            for (int i = 0; i < values.size(); i++) {
+                
+                By footerLink = By.xpath("//a[text()='" + values.get(i) + "']");
 
                 helper.clickOnElement(footerLink);
 
@@ -50,18 +45,15 @@ public class FnpBusinessAction {
 
                 Base.driver.navigate().back();
             }
+            
+            List<String> links  = ExcelReader.readExcelData("Sheet1", "business");
 
-            List<String> linkTextsUsefulLinks = Base.driver
-                    .findElements(By.xpath("//h6[contains(text(),'Useful Links')]/following-sibling::ul/li/a"))
-                    .stream()
-                    .map(WebElement::getText)
-                    .collect(Collectors.toList());
-
-           for (String linkText : linkTextsUsefulLinks) {
-
-                By footerLink = By.xpath("//a[text()='" + linkText + "']");
+            for (int i = 0; i < links.size(); i++)
+            {
+                By footerLink = By.xpath("//a[text()='" + links.get(i) + "']");
                 helper.clickOnElement(footerLink);
                 String pageTitle = Base.driver.getTitle();
+                test.log(Status.INFO,pageTitle);
                
                 System.out.println(pageTitle);
                 Base.driver.navigate().back();

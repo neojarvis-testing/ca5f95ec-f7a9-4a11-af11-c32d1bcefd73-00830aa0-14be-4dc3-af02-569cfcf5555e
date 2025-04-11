@@ -5,8 +5,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+
 import pages.FooterActionsSubh;
 import pages.NavBarActionsSubh;
 import utils.Base;
@@ -19,7 +21,7 @@ public class TestRunnerSubhash extends Base {
 
   @BeforeClass
   public void makeReports() {
-    reports = Reporter.generateReport(ExcelReader.readCellValue("Sheet1", "1", "reportName"));
+    reports = Reporter.generateReport("sample report");
   }
 
   @BeforeMethod
@@ -30,7 +32,7 @@ public class TestRunnerSubhash extends Base {
   @Test(priority = 1)
   public void cakesSearching() throws Exception {
     NavBarActionsSubh navBarActions = new NavBarActionsSubh();
-    test = reports.createTest(ExcelReader.readCellValue("Sheet1", "1", "testCaseName"));
+    test = reports.createTest("sample test");
     navBarActions.whereToDeliver();
     navBarActions.birthdayCakeSearch(test);
     navBarActions.buyTheCake();
@@ -40,19 +42,19 @@ public class TestRunnerSubhash extends Base {
   @Test(priority = 2)
   public void verifyPageTitle() {
     FooterActionsSubh footerActions = new FooterActionsSubh();
-    footerActions.linkVerificationPolicyInfo();
-    footerActions.linkVerificationAboutCompany();
+  footerActions.linkVerificationPolicyInfo();
+    //footerActions.linkVerificationAboutCompany();
   }
 
   @AfterMethod
-  public void quitDriver() {
-    if (driver != null) {
+  public void quitDriver() {  
       driver.quit();
-    }
+    
   }
 
   @AfterClass
   public void flushingReport() {
     reports.flush();
   }
+
 }

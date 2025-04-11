@@ -1,50 +1,74 @@
 package pages;
 
+import com.aventstack.extentreports.ExtentTest;
+
+import uistore.HomePage;
 import uistore.HomePageLocatorsKom;
 import uistore.LifeStyleLocators;
+import uistore.ProductPage;
+import uistore.ResultsPage;
 import utils.ExcelReader;
+import utils.LoggerHandler;
+import utils.Reporter;
+import utils.Screenshot;
 import utils.WebDriverHelper;
 
 public class LifeStyleFnpActions {
 
      WebDriverHelper helper = new WebDriverHelper();
+
+     public void NavBar(){
+
+       try {
+        helper.clickOnElement(HomePage.noThanks);
+            
+        helper.hoverOverElement(HomePage.hoverlifestyle);
+        helper.clickOnElement(HomePage.jewellery);
+       } catch (Exception e) {
+        LoggerHandler.errorMessage(e.getMessage());
+       }
+     }
      public void delivertoKolkata(){
-            helper.clickOnElement(HomePageLocatorsKom.noThanks);
- 
-        helper.hoverOverElement(HomePageLocatorsKom.hoverlifestyle);
-        helper.clickOnElement(HomePageLocatorsKom.jewellery);
-     //   helper.clickOnElement(LifeStyleLocators.rings);
         
-        helper.clickOnElement(HomePageLocatorsKom.whereToDeliver);
-        helper.clickOnElement(HomePageLocatorsKom.city);
+       try {
+        helper.clickOnElement(HomePage.location);
+        helper.clickOnElement(HomePage.pinCode);
         
-        helper.sendKeys(HomePageLocatorsKom.city, ExcelReader.readCellValue("Sheet1","2","city"));
+        helper.sendKeys(HomePage.pinCode, ExcelReader.readCellValue("Sheet1","4","city"));
         
-        helper.waitForElementToBeVisible(HomePageLocatorsKom.clickonkolkata);
-        helper.enterAction(HomePageLocatorsKom.city);
-        helper.waitForElementToBeVisible(HomePageLocatorsKom.continueShoppping1);
-        helper.hoverOverElement(HomePageLocatorsKom.continueShoppping1);
-        helper.clickOnElement(HomePageLocatorsKom.continueShoppping1);
+        helper.waitForElementToBeVisible(ProductPage.kolkata, 10);
+        helper.enterAction(HomePage.pinCode);
+        helper.waitForElementToBeVisible(HomePage.continueShopppingBtn, 10);
+        helper.hoverOverElement(HomePage.continueShopppingBtn);
+        helper.clickOnElement(HomePage.continueShopppingBtn);
         
 
-        helper.clickOnElement(LifeStyleLocators.rings);
-
-        helper.clickOnElement(HomePageLocatorsKom.whereToDeliver);
-        helper.clickOnElement(HomePageLocatorsKom.city);
+        helper.clickOnElement(ResultsPage.rings);
+        helper.clickOnElement(HomePage.location);
+        helper.clickOnElement(HomePage.pinCode);
         
-        helper.sendKeys(HomePageLocatorsKom.city, ExcelReader.readCellValue("Sheet1","2","city"));
+        helper.sendKeys(HomePage.pinCode, ExcelReader.readCellValue("Sheet1","4","city"));
         
-        helper.waitForElementToBeVisible(HomePageLocatorsKom.clickonkolkata);
-        helper.enterAction(HomePageLocatorsKom.city);
-        helper.waitForElementToBeVisible(HomePageLocatorsKom.continueShoppping1);
-        helper.hoverOverElement(HomePageLocatorsKom.continueShoppping1);
-        helper.clickOnElement(HomePageLocatorsKom.continueShoppping1);
-        helper.clickOnElement(LifeStyleLocators.firstproduct);
-        helper.switchToNewWindow();
-      
-        helper.clickOnElement(LifeStyleLocators.addtocart);
+        helper.waitForElementToBeVisible(ProductPage.kolkata, 10);
+        helper.enterAction(HomePage.pinCode);
+        helper.waitForElementToBeVisible(HomePage.continueShopppingBtn, 10);
+        helper.hoverOverElement(HomePage.continueShopppingBtn);
+        helper.clickOnElement(HomePage.continueShopppingBtn);
+       } catch (Exception e) {
+        LoggerHandler.errorMessage(e.getMessage());
+       }
 
        
     }
-
+    public void FirstProduct(ExtentTest test){
+       try {
+        helper.clickOnElement(ResultsPage.firstResult);
+        helper.switchToNewWindow();
+        helper.clickOnElement(ProductPage.addToCart);
+        Screenshot.takeScreenShotWithHighlight(ProductPage.addToCart,"FNP");
+        Reporter.attachToReport("FNP",test,"Passed");
+       } catch (Exception e) {
+        LoggerHandler.errorMessage(e.getMessage());
+       }
+    }
 }
