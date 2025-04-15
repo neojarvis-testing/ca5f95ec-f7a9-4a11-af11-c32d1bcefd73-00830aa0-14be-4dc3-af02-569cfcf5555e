@@ -19,8 +19,8 @@ public class ExcelReader {
     public static String cellValue = null;
  
     public static String readCellValue(String sheetName, String key, String columnName) {
-        String filePath = System.getProperty("user.dir") + "/excel/testdata.xlsx";
- 
+
+         String filePath=Base.prop.getProperty("file");
         try {
  
             file = new FileInputStream(filePath);
@@ -73,11 +73,11 @@ public class ExcelReader {
     public static List<String> readExcelData(String sheetName, String columnName) {
         List<String> data = new ArrayList<>();
         try {
-            String filePath = System.getProperty("user.dir") + "/excel/testdata.xlsx";
+          String filePath=Base.prop.getProperty("file");
             FileInputStream fis = new FileInputStream(filePath);
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
             XSSFSheet sheet = workbook.getSheet(sheetName);
-            Row headerRow = sheet.getRow(0);
+            XSSFRow headerRow = sheet.getRow(0);
             int columnIndex = -1;
             for (Cell cell : headerRow) {
                 if (cell.getStringCellValue().equalsIgnoreCase(columnName)) {
@@ -89,12 +89,15 @@ public class ExcelReader {
                 Row row = sheet.getRow(i);
                
                 Cell cell = row.getCell(columnIndex);
-                data.add(cell.getStringCellValue());
+               if (cell != null) {
+                data.add(cell.toString());
+               }
             }
             workbook.close();
             fis.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             LoggerHandler.infoMessage("Error reading Excel file: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return data;
     }

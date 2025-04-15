@@ -21,7 +21,7 @@ public class Base {
     public static Properties prop;
 
     public void loadProp() {
-        String propertiesPath = System.getProperty("user.dir") + "/config/browser.properties";
+        String propertiesPath = System.getProperty("user.dir") + "/config/config.properties";
         try {
             file = new FileInputStream(propertiesPath);
             prop = new Properties();
@@ -47,8 +47,8 @@ public class Base {
         {   
             driver.get(prop.getProperty("url"));
             driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(18));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Integer.parseInt(prop.getProperty("iwait"))));
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.parseInt(prop.getProperty("pwait"))));
 
         }
 

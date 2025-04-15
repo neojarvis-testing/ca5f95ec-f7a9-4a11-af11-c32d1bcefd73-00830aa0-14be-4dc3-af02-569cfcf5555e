@@ -36,7 +36,7 @@ public class TestRunner extends Base {
         MagicMugsAction mugsAction = new MagicMugsAction();
         test=reports.createTest("Mug Action");
         mugsAction.deliverToBangalore(test);
-        mugsAction.personalizedNavBar();
+        mugsAction.personalizedNavBar(test);
         
      }
 
@@ -44,13 +44,15 @@ public class TestRunner extends Base {
     public void iteration()
     {
         FnpBusinessAction businessAction = new FnpBusinessAction();
-        businessAction.footerIteration();
+        test=reports.createTest("Iteration");
+        businessAction.footerIteration(test);
     }
     
     @AfterMethod
     public void tearDown()
     {
        driver.quit();
+       
     }
     @AfterClass
     public void repFlush()
